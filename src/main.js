@@ -18,7 +18,7 @@ const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
     {path:'/blogs',component:EzBlogs},
-    {path:'/about',component:EzAbout}
+    {path:'/about',component:EzAbout,name:'about'}
   ]
 })
 
