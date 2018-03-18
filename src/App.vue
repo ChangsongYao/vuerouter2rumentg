@@ -2,11 +2,11 @@
   <div id="app" v-cloak>
     <nav>
       <router-link to="/">首页</router-link>
-      <router-link to="/blog">博客</router-link>
-      <router-link to="/about">关于</router-link>
+      <router-link to="/shop?id=1&message=你好，欢迎光临1号店&banner=static/shop1-banner.jpg">1号店</router-link>
+      <router-link to="/shop?id=2&message=2号店欢迎你的光临&banner=static/shop2-banner.jpg">2号店</router-link>
+      <router-link to="/about?contact=62881122">关于</router-link>
     </nav>
     <router-view></router-view>
-    <pre>{{$route}}</pre>
   </div>
 </template>
 
@@ -47,9 +47,8 @@
     color: bold;
     border-bottom: 2px solid red;
   }
-  pre{
-    font-family:Consolas;
+  img.banner{
+    width:100%;
   }
-
 
 </style>
