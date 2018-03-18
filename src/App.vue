@@ -2,11 +2,16 @@
   <div id="app" v-cloak>
     <nav>
       <router-link to="/">首页</router-link>
-      <router-link to="/blogs">博客</router-link>
+      <router-link to="/shop/1">1号店</router-link>
+      <router-link to="/shop/2">2号店</router-link>
       <router-link to="/about">关于</router-link>
-      <router-link to="/admin">管理</router-link>
     </nav>
     <router-view></router-view>
+    <div class="logs">
+      <div class="log" v-for="log in $store.logs">
+        {{log.ts | tfmt}} <b>{{log.hook}}</b> {{log.url}} &larr; {{log.referer}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,11 +46,39 @@
     color: bold;
     border-bottom: 2px solid red;
   }
-  form{
-    width:250px;
-    margin:50px auto;
-    padding:20px;
-    border:1px solid #777;
+  .log{
+    line-height: 30px;
+  }
+  .confirm{
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    z-index:100;
+  }
+  .confirm > *{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+  }
+  .confirm .shadow{
+    background:#000;
+    opacity:0.6;
+  }
+  .confirm .inner{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .confirm .box{
+    background:white;
+    border: 1px solid #ccc;
+    width:300px;
+    height:120px;
+    text-align:center;
   }
 
 </style>

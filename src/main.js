@@ -11,58 +11,84 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-let token;
-
-const EzHome = {template:'<h1>HOME</h1>'}
-const EzBlogs = {template:'<h1>BLOGS</h1>'}
-const EzAbout = {template:'<h1>ABOUT</h1>'}
-const EzAdmin = {
-  template:`
-    <div class="admin">
-      <h1>ADMIN</h1>
-      <button @click="logout">LOGOUT</button>
+const EzConfirm = {
+  template: `
+    <div class="confirm">
+      <div class="shadow"></div>
+      <div class="inner">
+        <div class="box">
+          <h4>亲，买点东西再走吧...</h4>
+          <button @click="trigger('yes')">好，我再看看</button>
+          <button @click="trigger('no')">忙，回头再说</button>
+        </div>
+      </div>
     </div>
   `,
   methods:{
-    logout(){
-      token = undefined
-      this.$router.push('/login')
+    trigger(ret){
+      this.$emit('ret',ret);
+      this.$destroy();
+      this.$el.remove();
     }
   }
 }
-const EzLogin = {
-  template: `
-    <form @submit.prevent="auth">
-      <input placeholder="name">
-      <input placeholder="password">
-      <input type="submit" value="login">
-    </form>
-  `,
-  methods:{
-    auth(){
-      token = Math.random()
-      this.$router.push('/admin')
-    }
+const EzHome = {template:'<h1>HOME</h1>'}
+const EzShop = {
+  template:'<h1>SHOP {{$route.params.id}}#</h1>',
+  beforeRouteEnter(to,from,next){
+    next(vm => {
+      vm.$store.log('beforeRouteEnter',to.path,from.path);
+    });
+  },
+  beforeRouteUpdate(to,from,next){
+    this.$store.log('beforeRouteUpdate',to.path,from.path);
+    next();
+  },
+  beforeRouteLeave(to,from,next){
+    this.$store.log('beforeRouteLeave',to.path,from.path);
+    this.$confirm(ret => ret === 'yes' ? next(false) : next())
   }
+
 }
+const EzAbout = {template:'<h1>ABOUT</h1>'}
 
 const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
-    {path:'/blogs',component:EzBlogs},
-    {path:'/about',component:EzAbout},
-    {path:'/login',component:EzLogin},
-    {
-      path:'/admin',
-      component:EzAdmin,
-      beforeEnter(to,from,next){
-        if(!token) return next('/login')
-        next()
-      }
-    }
+    {path:'/shop/:id',component:EzShop},
+    {path:'/about',component:EzAbout}
   ]
 })
 
+const store = new Vue({
+  data:{ logs:[]  },
+  methods:{
+    log(hook,url,referer){
+      this.logs.unshift({
+        hook: hook,
+        url: url,
+        referer, referer,
+        ts: Date.now()
+      })
+    }
+  }
+})
+
+Vue.mixin({
+  beforeCreate(){
+    this.$store = store;
+  },
+  methods:{
+    '$confirm'(cb){
+      const vm = new Vue(EzConfirm).$mount();
+      vm.$on('ret',ret => cb(ret) )
+      document.body.appendChild(vm.$el);
+    }
+  },
+  filters:{
+    tfmt: v => moment(v).format('HH:mm:ss')
+  }
+})
 
 new Vue({
   el:'#app',
