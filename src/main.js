@@ -10,13 +10,15 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const EzHome = {template: '<h1>HOME</h1>'}
-const EzAbout = {template: '<h1>ABOUT</h1>'}
+const EzHome = {template:'<h1>HOME</h1>'}
+const EzBlogs = {template:'<h1>BLOGS</h1>'}
+const EzAbout = {template:'<h1>ABOUT</h1>'}
 
 const router = new VueRouter({
-  routes: [
-    {path: '/', component: EzHome},
-    {path: '/about', component: EzAbout}
+  routes:[
+    {path:'/',component:EzHome},
+    {path:'/blogs',component:EzBlogs},
+    {path:'/about',component:EzAbout}
   ]
 })
 
