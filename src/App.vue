@@ -2,10 +2,12 @@
   <div id="app" v-cloak>
     <nav>
       <router-link to="/">首页</router-link>
-      <router-link to="/blogs'}">博客</router-link>
-      <router-link :to="{name:'about'}">关于</router-link>
+      <router-link to="/blogs">博客</router-link>
+      <router-link to="/about">关于</router-link>
+      <router-link to="/archives">博客存档</router-link>
     </nav>
     <router-view></router-view>
+    <pre>当前激活路径：{{$route.path}}</pre>
   </div>
 </template>
 
@@ -39,6 +41,9 @@
   .router-link-exact-active{
     color: bold;
     border-bottom: 2px solid red;
+  }
+  pre{
+    font-family:Consolas;
   }
 
 

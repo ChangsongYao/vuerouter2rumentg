@@ -17,11 +17,11 @@ const EzAbout = {template:'<h1>ABOUT</h1>'}
 const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
-    {path:'/blogs',component:EzBlogs},
-    {path:'/about',component:EzAbout,name:'about'}
+    {path:'/blogs',component:EzBlogs,name:'blogs'},
+    {path:'/about',component:EzAbout},
+    {path:'/archives',redirect:'/blogs'}
   ]
 })
-
 
 new Vue({
   el: '#app',
