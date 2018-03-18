@@ -1,47 +1,17 @@
 <template>
   <div id="app" v-cloak>
-    <router-link to="/">首页</router-link>
-    <router-link to="/shop/1">1号店</router-link>
-    <router-link to="/shop/2">2号店</router-link>
-    <router-link to="/about">关于</router-link>
-    <ez-view></ez-view>
-    <pre>{{$route}}</pre>
+    <nav class="header">
+      <router-link to="/" exact>首页</router-link>
+      <router-link to="/blog">博客</router-link>
+      <router-link to="/about">关于</router-link>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import App from './App'
-  import VueRouter from 'vue-router'
-
-  const EzHome = {template:'<h1>HOME</h1>'}
-  const EzAbout = {template:'<h1>ABOUT</h1>'}
-  const EzShop = {
-    template:'<h1>SHOP {{id}}</h1>',
-    computed:{
-      id(){ return this.$route.params.id}
-    }
-  }
-
-  const EzView = {
-    render(h){
-      if(this.$route.matched.length == 0 ) return h();
-      const comp = this.$route.matched[0].components.default;
-      return h(comp);
-    }
-  }
-
-  const router = new VueRouter({
-    routes:[
-      {path:'/',component:EzHome},
-      {path:'/shop/:id',component:EzShop},
-      {path:'/about',component:EzAbout}
-    ]
-  })
-
   export default {
-    name: 'App',
-    router,
-    components:{EzView}
+    name: 'App'
   }
 </script>
 
@@ -60,18 +30,50 @@
     0%{width:0%}
     100%{width:90%}
   }
-  a{
+  nav.header{
+    padding:15px;
+    background:#f0f0f0;
+  }
+  nav.header a{
     text-decoration: none;
     color:black;
     padding:10px 20px;
     text-align:center;
   }
-  .router-link-exact-active{
+  nav.header .router-link-active{
     color: bold;
     border-bottom: 2px solid red;
+  }
+  div.blogs{
+    display:flex;
+    margin-top:10px;
+  }
+  .blogs nav{
+    width:150px;
+    background:#f0f0f0;
+  }
+  .blogs article{
+    padding: 0px 10px;
+    flex:1;
+  }
+  .blogs a{
+    display:block;
+    text-decoration: none;
+    color:black;
+    padding:10px 20px;
+    text-align:center;
+  }
+  .blogs a:hover{
+    background:#777;
+    color:white;
+  }
+  .blogs .router-link-exact-active{
+    background:blue;
+    color:white;
   }
   pre{
     font-family:Consolas;
   }
+
 
 </style>
