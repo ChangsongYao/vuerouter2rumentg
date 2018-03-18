@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-cloak>
     <nav>
-      <router-link to="/">首页</router-link>
+      <router-link to="/" tag="img" src="static/matrix-logo.jpg" alt="home">首页</router-link>
       <router-link to="/shop/1">1号店</router-link>
       <router-link to="/shop/2">2号店</router-link>
       <router-link to="/about">关于</router-link>
@@ -12,7 +12,6 @@
 
 <script>
   import VueRouter from 'vue-router'
-
   const EzHome = {template:'<h1>HOME</h1>'}
   const EzShop = {template:'<h1>SHOP {{$route.params.id}}#</h1>'}
   const EzAbout = {template:'<h1>ABOUT</h1>'}
@@ -71,15 +70,22 @@
     0%{width:0%}
     100%{width:90%}
   }
-  a{
+  nav > *{
+    vertical-align:middle;
+    display:inline-block;
+    border:none;
+    padding:10px 20px;
+    cursor:pointer;
+  }
+  nav > a{
     text-decoration: none;
     color:black;
-    padding:10px 20px;
     text-align:center;
   }
-  .router-link-exact-active{
+  nav > *.router-link-exact-active{
     color: bold;
     border-bottom: 2px solid red;
   }
+
 
 </style>
