@@ -11,36 +11,46 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const EzHome = {
-  props:{
-    user: {
-      default:'Anonymous'
-    }
-  },
-  template:'<h1>HELLO, {{user}}</h1>'
-}
-const EzShop = {
-  props:['id','message','banner'],
-  template:`
-    <div class="shop">
-      <h1>SHOP {{id}}#</h1>
-      <p>{{message}}</p>
-      <img :src="banner" class="banner">
-    </div>
-  `,
-}
+const EzHome = {template:'<h1>HOME</h1>'}
+const EzBlogs = {template:'<h1>BLOGS</h1>'}
 const EzAbout = {template:'<h1>ABOUT</h1>'}
+const EzAdmin = {template:'<h1>ADMIN</h1>'}
 
 const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
-    {
-      path:'/shop',
-      component:EzShop,
-      props: route => route.query
-    },
-    {path:'/about',component:EzAbout}
+    {path:'/blogs',component:EzBlogs},
+    {path:'/about',component:EzAbout},
+    {path:'/admin',component:EzAdmin}
   ]
+})
+
+router.beforeEach((to,from,next)=>{
+  store.log(to.path,from ? from.path : undefined)
+  next()
+})
+
+
+const store = new Vue({
+  data:{ logs:[]  },
+  methods:{
+    log(url,referer){
+      this.logs.unshift({
+        url: url,
+        referer, referer,
+        ts: Date.now()
+      })
+    }
+  }
+})
+
+Vue.mixin({
+  beforeCreate(){
+    this.$store = store;
+  },
+  filters:{
+    tfmt: v => moment(v).format('HH:mm:ss')
+  }
 })
 
 
