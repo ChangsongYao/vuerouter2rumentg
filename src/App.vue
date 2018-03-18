@@ -7,11 +7,6 @@
       <router-link to="/admin">管理</router-link>
     </nav>
     <router-view></router-view>
-    <div class="logs">
-      <div class="log" v-for="log in $store.logs">
-        {{log.ts | tfmt}} <b>{{log.url}}</b> &larr; <b>{{log.referer}}</b>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -46,8 +41,11 @@
     color: bold;
     border-bottom: 2px solid red;
   }
-  .log{
-    line-height: 30px;
+  form{
+    width:250px;
+    margin:50px auto;
+    padding:20px;
+    border:1px solid #777;
   }
 
 </style>

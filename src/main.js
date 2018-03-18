@@ -11,47 +11,56 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
+let token;
+
 const EzHome = {template:'<h1>HOME</h1>'}
 const EzBlogs = {template:'<h1>BLOGS</h1>'}
 const EzAbout = {template:'<h1>ABOUT</h1>'}
-const EzAdmin = {template:'<h1>ADMIN</h1>'}
+const EzAdmin = {
+  template:`
+    <div class="admin">
+      <h1>ADMIN</h1>
+      <button @click="logout">LOGOUT</button>
+    </div>
+  `,
+  methods:{
+    logout(){
+      token = undefined
+      this.$router.push('/login')
+    }
+  }
+}
+const EzLogin = {
+  template: `
+    <form @submit.prevent="auth">
+      <input placeholder="name">
+      <input placeholder="password">
+      <input type="submit" value="login">
+    </form>
+  `,
+  methods:{
+    auth(){
+      token = Math.random()
+      this.$router.push('/admin')
+    }
+  }
+}
 
 const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
     {path:'/blogs',component:EzBlogs},
     {path:'/about',component:EzAbout},
-    {path:'/admin',component:EzAdmin,meta:{log:true}}
-  ]
-})
-
-router.beforeEach((to,from,next)=>{
-  if(to.matched[0] && to.matched[0].meta.log)
-    store.log(to.path,from ? from.path : undefined)
-  next()
-})
-
-
-const store = new Vue({
-  data:{ logs:[]  },
-  methods:{
-    log(url,referer){
-      this.logs.unshift({
-        url: url,
-        referer, referer,
-        ts: Date.now()
-      })
+    {path:'/login',component:EzLogin},
+    {
+      path:'/admin',
+      component:EzAdmin,
+      beforeEnter(to,from,next){
+        if(!token) return next('/login')
+        next()
+      }
     }
-  }
-})
-
-Vue.mixin({
-  beforeCreate(){
-    this.$store = store;
-  },
-  filters:{
-    tfmt: v => moment(v).format('HH:mm:ss')
-  }
+  ]
 })
 
 
