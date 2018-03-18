@@ -1,11 +1,12 @@
 <template>
   <div id="app" v-cloak>
-    <router-link to="/">首页</router-link>
-    <router-link to="/shop/1">1号店</router-link>
-    <router-link to="/shop/2">2号店</router-link>
-    <router-link to="/about">关于</router-link>
+    <nav>
+      <router-link to="/">首页</router-link>
+      <router-link to="/blog">博客</router-link>
+      <router-link to="/about">关于</router-link>
+    </nav>
     <router-view></router-view>
-    <pre>{{href()}}</pre>
+    <pre>{{$route}}</pre>
   </div>
 </template>
 
