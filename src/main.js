@@ -10,58 +10,50 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const EzHome = {template:'<h1>HOME</h1>'}
-
-const EzBlogs = {
-  data(){
-    return {
-      blogs:[
-        {title:'blog 1#',content:'content of blog 1#...'},
-        {title:'blog 2#',content:'content of blog 2#...'},
-        {title:'blog 3#',content:'content of blog 3#...'}]
-    }
-  },
+const EzNewsColumn = {
   template:`
-    <div class="blogs">
-      <nav>
-        <router-link v-for="(blog,idx) in blogs" :to="'/blog/' + idx">
-          {{blog.title}}
-        </router-link>
-      </nav>
-      <router-view></router-view>
+    <div class="news-column">
+      <h2>{{tag}}</h2>
+      <ul>
+        <li v-for="_news in news">
+          <a href="#" @click.prevent>{{_news.title}}</a>
+        </li>
+      </ul>
     </div>
-  `
-}
-
-const EzBlog = {
-  template:`
-    <article>
-  	  <h1>{{blog.title}}</h1>
-      <p>{{blog.content}}</p>
-    </article>
-    `,
+  `,
   computed:{
-    blog(){ return this.$parent.blogs[+this.$route.params.idx] }
+    tag() { return this.$route.params.tag },
+    news(){
+      return this.$parent.news.filter(n =>
+        n.tag === this.$route.params.tag)
+    }
   }
 }
 
-
-const EzAbout = {template:'<h1>ABOUT</h1>'}
+const EzAdvert = {
+  template:`
+    <div class="advert">
+      <img :src="ad_url">
+    </div>
+  `,
+  computed:{
+    ad_url(){ return 'static/ad_' + this.$route.params.tag + '.jpg' }
+  }
+}
 
 const router = new VueRouter({
   routes:[
-    {path:'/',component:EzHome},
     {
-      path:'/blog',
-      component:EzBlogs,
-      children:[
-        {path:':idx',component:EzBlog}
-      ]
-    },
-    {path:'/about',component:EzAbout}
+      path:'/:tag',
+      components:{
+        default: EzNewsColumn,
+        advert: EzAdvert
+      }
+    }
   ]
 })
 
+router.push('/国内')
 
 new Vue({
   el:'#app',
