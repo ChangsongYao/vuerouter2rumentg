@@ -1,16 +1,13 @@
 <template>
   <div id="app" v-cloak>
-    <nav class="header">
+    <nav>
       <router-link to="/">首页</router-link>
-      <router-link to="/shop/1">1号店</router-link>
-      <router-link to="/shop/2">2号店</router-link>
+      <router-link to="/blog">博客</router-link>
       <router-link to="/about">关于</router-link>
     </nav>
-    <transition appear
-                appear-active-class="animated fadeIn"
-                enter-active-class="animated zoomIn">
+    <div class="content">
       <router-view></router-view>
-    </transition>
+    </div>
   </div>
 </template>
 
@@ -35,12 +32,28 @@
     0%{width:0%}
     100%{width:90%}
   }
-  body{
-    overflow:hidden
+  nav{
+    position:fixed;
+    display:block;
+    left:0;top:0;
+    right:0;
+    padding:15px;
+    background:#333;
+    opacity:0.8;
+  }
+  .content{
+    margin-top:50px;
+  }
+  .channel-box{
+    height:100px;
+    background:#f0f0f0;
+    margin-bottom:10px;
+    text-align:center;
+    line-height:100px;
   }
   nav a{
     text-decoration: none;
-    color:black;
+    color:#fff;
     padding:10px 20px;
     text-align:center;
   }
@@ -48,23 +61,11 @@
     color: bold;
     border-bottom: 2px solid red;
   }
-  .home,.shop,.about{
-    position:absolute;
-    left:10px;
-    top:50px;
-    right:10px;
-    bottom:10px;
-    padding: 5px 20px;
-    color:white;
+  .blogs li{
+    line-height:30px;
   }
-  .home{
-    background:#700;
-  }
-  .shop{
-    background:#070;
-  }
-  .about{
-    background:#007;
+  pre{
+    font-family:Consolas;
   }
 
 </style>
