@@ -11,41 +11,35 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const EzHome = {
-  template:`
-    <div class="home">
-      <h1>HOME</h1>
-      <button @click="$router.push('/blog')">前往博客组件</button>
-    </div>
-  `
-}
-const EzBlogs = {
-  template:`
-    <div class="blogs">
-  	  <h1>BLOGS</h1>
-      <button @click="$router.go(-1)">返回前一组件</button>
-    </div>
-  `,
-}
+const EzHome = {template:'<h1>HOME</h1>'}
 const EzAbout = {template:'<h1>ABOUT</h1>'}
+const EzShop = {
+  template:'<h1>SHOP {{id}}</h1>',
+  computed:{
+    id(){ return this.$route.params.id}
+  }
+}
+
+const EzView = {
+  render(h){
+    if(this.$route.matched.length == 0 ) return h();
+    const comp = this.$route.matched[0].components.default;
+    return h(comp);
+  }
+}
 
 const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
-    {path:'/blog',component:EzBlogs},
+    {path:'/shop/:id',component:EzShop},
     {path:'/about',component:EzAbout}
-  ],
-  mode:'abstract'
+  ]
 })
-
-router.push('/')
 
 new Vue({
   el:'#app',
   router,
-  filters:{
-    map: (arr,key) => arr.map(item => item[key])
-  },
+
   components: {App},
   template: '<App/>'
 })

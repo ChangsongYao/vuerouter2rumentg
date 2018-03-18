@@ -1,21 +1,23 @@
 <template>
   <div id="app" v-cloak>
-    <nav>
-      <i class="fa fa-arrow-left btn" @click="$router.back()" title="后退"></i>
-      <i class="fa fa-arrow-right btn" @click="$router.forward()" title="前进"></i>
-      <router-link to="/">首页</router-link>
-      <router-link to="/blog">博客</router-link>
-      <router-link to="/about">关于</router-link>
-    </nav>
+    <router-link to="/">首页</router-link>
+    <router-link to="/shop/1">1号店</router-link>
+    <router-link to="/shop/2">2号店</router-link>
+    <router-link to="/about">关于</router-link>
     <router-view></router-view>
-    <pre>当前定位：{{$router.history.index}}</pre>
-    <pre>{{$router.history.stack | map('path')  }}</pre>
+    <pre>{{href()}}</pre>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    methods:{
+      href(){ return window.location.href}
+    },
+    watch:{
+      '$route'(){ this.$forceUpdate() }
+    },
   }
 </script>
 
@@ -43,10 +45,6 @@
   .router-link-exact-active{
     color: bold;
     border-bottom: 2px solid red;
-  }
-  i.btn{
-    padding:10px 20px;
-    cursor:pointer;
   }
   pre{
     font-family:Consolas;
