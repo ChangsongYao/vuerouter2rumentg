@@ -1,19 +1,47 @@
 <template>
   <div id="app" v-cloak>
-    <nav>
-      <router-link to="/">首页</router-link>
-      <router-link to="/blog">博客</router-link>
-      <router-link to="/about">关于</router-link>
-    </nav>
-    <div class="content">
-      <router-view></router-view>
-    </div>
+    <router-link to="/">首页</router-link>
+    <router-link to="/shop/1">1号店</router-link>
+    <router-link to="/shop/2">2号店</router-link>
+    <router-link to="/about">关于</router-link>
+    <ez-view></ez-view>
+    <pre>{{$route}}</pre>
   </div>
 </template>
 
 <script>
+  import App from './App'
+  import VueRouter from 'vue-router'
+
+  const EzHome = {template:'<h1>HOME</h1>'}
+  const EzAbout = {template:'<h1>ABOUT</h1>'}
+  const EzShop = {
+    template:'<h1>SHOP {{id}}</h1>',
+    computed:{
+      id(){ return this.$route.params.id}
+    }
+  }
+
+  const EzView = {
+    render(h){
+      if(this.$route.matched.length == 0 ) return h();
+      const comp = this.$route.matched[0].components.default;
+      return h(comp);
+    }
+  }
+
+  const router = new VueRouter({
+    routes:[
+      {path:'/',component:EzHome},
+      {path:'/shop/:id',component:EzShop},
+      {path:'/about',component:EzAbout}
+    ]
+  })
+
   export default {
-    name: 'App'
+    name: 'App',
+    router,
+    components:{EzView}
   }
 </script>
 
@@ -32,37 +60,15 @@
     0%{width:0%}
     100%{width:90%}
   }
-  nav{
-    position:fixed;
-    display:block;
-    left:0;top:0;
-    right:0;
-    padding:15px;
-    background:#333;
-    opacity:0.8;
-  }
-  .content{
-    margin-top:50px;
-  }
-  .channel-box{
-    height:100px;
-    background:#f0f0f0;
-    margin-bottom:10px;
-    text-align:center;
-    line-height:100px;
-  }
-  nav a{
+  a{
     text-decoration: none;
-    color:#fff;
+    color:black;
     padding:10px 20px;
     text-align:center;
   }
   .router-link-exact-active{
     color: bold;
     border-bottom: 2px solid red;
-  }
-  .blogs li{
-    line-height:30px;
   }
   pre{
     font-family:Consolas;
