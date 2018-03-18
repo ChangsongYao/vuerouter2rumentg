@@ -5,27 +5,13 @@
       <router-link to="/blogs">博客</router-link>
       <router-link to="/about">关于</router-link>
     </nav>
-    <transition :enter-active-class="effect">
-      <router-view></router-view>
-    </transition>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'App',
-    data:function () {
-      return{
-        effects: ['zoomIn','slideInDown','bounceIn','flipInX','rotateIn','rollIn','lightSpeedIn','fadeIn'],
-        effect :''
-      }
-
-    },
-    watch:{
-      '$route'(to,from){
-        this.effect = ['animated', _.sample(this.effects)].join(' ')
-      }
-    }
+    name: 'App'
   }
 </script>
 
