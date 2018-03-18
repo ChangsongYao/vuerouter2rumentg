@@ -1,10 +1,10 @@
 <template>
   <div id="app" v-cloak>
     <nav>
-      <ez-link to="/">首页</ez-link>
-      <ez-link to="/shop/1">1号店</ez-link>
-      <ez-link to="/shop/2">2号店</ez-link>
-      <ez-link to="/about">关于</ez-link>
+      <router-link to="/">首页</router-link>
+      <router-link to="/shop/1">1号店</router-link>
+      <router-link to="/shop/2">2号店</router-link>
+      <router-link to="/about">关于</router-link>
     </nav>
     <router-view></router-view>
   </div>
@@ -19,9 +19,9 @@
 
   const router = new VueRouter({
     routes:[
-      {path:'/',component:EzHome},
-      {path:'/shop/:id',component:EzShop},
-      {path:'/about',component:EzAbout}
+      {path:'/',component:EzHome,name:'home'},
+      {path:'/shop/:id',component:EzShop,name:'shop'},
+      {path:'/about',component:EzAbout,name:'about'}
     ]
   })
 
