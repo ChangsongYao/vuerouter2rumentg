@@ -11,33 +11,21 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const _blogs = [
-  {title:'blog 1#',content:'content of blog 1#...'},
-  {title:'blog 2#',content:'content of blog 2#...'},
-  {title:'blog 3#',content:'content of blog 3#...'},
-]
-
-Vue.mixin({
-  beforeCreate(){ this.$blogs = _blogs  }
-})
-
-const EzShop ={template:'<h1>SHOP {{$route.params.id}}#</h1>'}
-
-const EzBlog = {
-  template:`
-    <article>
-  	  <h1>{{blog.title}}</h1>
-      <p>{{blog.content}}</p>
-    </article>
-    `,
-  computed:{
-    blog(){ return this.$blogs[+this.$route.params.idx] }
-  }
-}
+const EzHome = {template:'<h4>渲染结果看这里</h4>'}
+const EzBlog = {template:'<h4>BLOG {{$route.params.id}}</h4>'}
+const EzFileMan = {template:'<h4>FILE {{$route.params.path}}</h4>}'}
+const EzCard = {template:'<h4>CARD {{$route.params[0]}}</h4>'}
 
 const router = new VueRouter({
   routes:[
-    {path:'/blog/:idx',component:EzBlog}
+    {path:'/',component:EzHome},
+    {path:'/named-param/blog/:id',component:EzBlog},
+    {path:'/custom-named-param/blog/:id(\\d+)',component:EzBlog},
+    {path:'/optional-param/blog/:id?',component:EzBlog},
+    {path:'/zero-or-more-param/fileman/:path*',component:EzFileMan},
+    {path:'/one-or-more-param/fileman/:path+',component:EzFileMan},
+    {path:'/anonymous-param/card/(\\d+)',component:EzCard},
+    {path:'/asterisk-param/card/*',component:EzCard}
   ]
 })
 
