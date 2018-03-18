@@ -22,7 +22,6 @@ const router = new VueRouter({
     {path:'/about',component:EzAbout}
   ]
 })
-
 new Vue({
   el:'#app',
   router,
