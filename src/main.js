@@ -21,12 +21,13 @@ const router = new VueRouter({
     {path:'/',component:EzHome},
     {path:'/blogs',component:EzBlogs},
     {path:'/about',component:EzAbout},
-    {path:'/admin',component:EzAdmin}
+    {path:'/admin',component:EzAdmin,meta:{log:true}}
   ]
 })
 
 router.beforeEach((to,from,next)=>{
-  store.log(to.path,from ? from.path : undefined)
+  if(to.matched[0] && to.matched[0].meta.log)
+    store.log(to.path,from ? from.path : undefined)
   next()
 })
 
