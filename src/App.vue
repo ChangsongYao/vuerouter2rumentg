@@ -1,17 +1,17 @@
 <template>
   <div id="app" v-cloak>
-    <nav>
+    <nav class="header">
       <router-link to="/">首页</router-link>
-      <router-link to="/shop/1">1号店</router-link>
-      <router-link to="/shop/2">2号店</router-link>
+      <router-link to="/blogs">博客</router-link>
       <router-link to="/about">关于</router-link>
     </nav>
-    <router-view></router-view>
-    <div class="logs">
-      <div class="log" v-for="log in $store.logs">
-        {{log.ts | tfmt}} <b>{{log.hook}}</b> {{log.url}} &larr; {{log.referer}}
-      </div>
-    </div>
+    <transition appear
+                appear-active-class="animated fadeIn"
+                enter-active-class="animated tada"
+                leave-active-class="animated rotateOut"
+                mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -36,7 +36,10 @@
     0%{width:0%}
     100%{width:90%}
   }
-  a{
+  body{
+    overflow:hidden
+  }
+  nav a{
     text-decoration: none;
     color:black;
     padding:10px 20px;
@@ -46,39 +49,23 @@
     color: bold;
     border-bottom: 2px solid red;
   }
-  .log{
-    line-height: 30px;
-  }
-  .confirm{
-    position:fixed;
-    left:0;
-    top:0;
-    right:0;
-    bottom:0;
-    z-index:100;
-  }
-  .confirm > *{
+  .home,.blogs,.about{
     position:absolute;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
+    left:10px;
+    top:50px;
+    right:10px;
+    bottom:10px;
+    padding: 5px 20px;
+    color:white;
   }
-  .confirm .shadow{
-    background:#000;
-    opacity:0.6;
+  .home{
+    background:#700;
   }
-  .confirm .inner{
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  .blogs{
+    background:#070;
   }
-  .confirm .box{
-    background:white;
-    border: 1px solid #ccc;
-    width:300px;
-    height:120px;
-    text-align:center;
+  .about{
+    background:#007;
   }
 
 </style>
