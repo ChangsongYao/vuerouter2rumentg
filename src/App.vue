@@ -2,10 +2,15 @@
   <div id="app" v-cloak>
     <nav class="header">
       <router-link to="/">首页</router-link>
-      <router-link to="/blogs">博客</router-link>
+      <router-link to="/shop/1">1号店</router-link>
+      <router-link to="/shop/2">2号店</router-link>
       <router-link to="/about">关于</router-link>
     </nav>
-    <router-view></router-view>
+    <transition appear
+                appear-active-class="animated fadeIn"
+                enter-active-class="animated zoomIn">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -43,7 +48,7 @@
     color: bold;
     border-bottom: 2px solid red;
   }
-  .home,.blogs,.about{
+  .home,.shop,.about{
     position:absolute;
     left:10px;
     top:50px;
@@ -55,7 +60,7 @@
   .home{
     background:#700;
   }
-  .blogs{
+  .shop{
     background:#070;
   }
   .about{

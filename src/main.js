@@ -11,41 +11,23 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const EzHome = {
+const EzHome = {template:'<div class="home"><h1>HOME</h1></div>'}
+const EzShop = {
   template:`
-    <transition appear 
-        appear-active-class="animated flipInX"
-        enter-active-class="animated slideInRight">
-      <div class="home">
-        <h1>HOME</h1>
-      </div>
-    </transition>
-  `
+    <div class="shop">
+      <h1>SHOP {{$route.params.id}}</h1>
+    </div>`
 }
-const EzBlogs = {
-  template:`
-    <transition enter-active-class="animated zoomIn">
-      <div class="blogs">
-        <h1>BLOGS</h1>
-      </div>
-    </transition>
-  `
-}
-const EzAbout = {
-  template:`
-      <div class="about">
-        <h1>ABOUT</h1>
-      </div>
-  `
-}
+const EzAbout = {template:'<div class="about"><h1>ABOUT</h1></div>'}
 
 const router = new VueRouter({
   routes:[
     {path:'/',component:EzHome},
-    {path:'/blogs',component:EzBlogs},
+    {path:'/shop/:id',component:EzShop},
     {path:'/about',component:EzAbout}
   ]
 })
+
 
 new Vue({
   el:'#app',
