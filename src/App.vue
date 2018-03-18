@@ -1,13 +1,15 @@
 <template>
   <div id="app" v-cloak>
     <nav>
+      <i class="fa fa-arrow-left btn" @click="$router.back()" title="后退"></i>
+      <i class="fa fa-arrow-right btn" @click="$router.forward()" title="前进"></i>
       <router-link to="/">首页</router-link>
-      <router-link to="/blogs">博客</router-link>
+      <router-link to="/blog">博客</router-link>
       <router-link to="/about">关于</router-link>
-      <router-link to="/archives">博客存档</router-link>
     </nav>
     <router-view></router-view>
-    <pre>当前激活路径：{{$route.path}}</pre>
+    <pre>当前定位：{{$router.history.index}}</pre>
+    <pre>{{$router.history.stack | map('path')  }}</pre>
   </div>
 </template>
 
@@ -41,6 +43,10 @@
   .router-link-exact-active{
     color: bold;
     border-bottom: 2px solid red;
+  }
+  i.btn{
+    padding:10px 20px;
+    cursor:pointer;
   }
   pre{
     font-family:Consolas;
