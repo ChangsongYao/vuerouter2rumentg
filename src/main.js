@@ -11,23 +11,33 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter);
 
-const EzHome = {template:'<h1>HELLO, {{$route.query.user }}</h1>'}
-const EzShop = {
+const _blogs = [
+  {title:'blog 1#',content:'content of blog 1#...'},
+  {title:'blog 2#',content:'content of blog 2#...'},
+  {title:'blog 3#',content:'content of blog 3#...'},
+]
+
+Vue.mixin({
+  beforeCreate(){ this.$blogs = _blogs  }
+})
+
+const EzShop ={template:'<h1>SHOP {{$route.params.id}}#</h1>'}
+
+const EzBlog = {
   template:`
-    <div class="shop">
-      <h1>SHOP {{$route.query.id}}#</h1>
-      <p>{{$route.query.message}}</p>
-      <img :src="$route.query.banner" class="banner">
-    </div>
-  `,
+    <article>
+  	  <h1>{{blog.title}}</h1>
+      <p>{{blog.content}}</p>
+    </article>
+    `,
+  computed:{
+    blog(){ return this.$blogs[+this.$route.params.idx] }
+  }
 }
-const EzAbout = {template:'<h1>ABOUT</h1>'}
 
 const router = new VueRouter({
   routes:[
-    {path:'/',component:EzHome},
-    {path:'/shop',component:EzShop},
-    {path:'/about',component:EzAbout}
+    {path:'/blog/:idx',component:EzBlog}
   ]
 })
 

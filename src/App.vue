@@ -1,12 +1,15 @@
 <template>
   <div id="app" v-cloak>
-    <nav>
-      <router-link to="/">首页</router-link>
-      <router-link to="/shop?id=1&message=你好，欢迎光临1号店&banner=static/shop1-banner.jpg">1号店</router-link>
-      <router-link to="/shop?id=2&message=2号店欢迎你的光临&banner=static/shop2-banner.jpg">2号店</router-link>
-      <router-link to="/about?contact=62881122">关于</router-link>
-    </nav>
-    <router-view></router-view>
+    <div class="main">
+      <nav>
+        <router-link to="/shop/1">1号店</router-link>
+        <router-link to="/shop/2">2号店</router-link>
+        <router-link v-for="(blog,idx) in $blogs" :to="'/blog/' + idx">
+          {{blog.title}}
+        </router-link>
+      </nav>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -37,18 +40,34 @@
     0%{width:0%}
     100%{width:90%}
   }
+  div.main{
+    display:flex;
+  }
+  nav{
+    width:150px;
+    background:#f0f0f0;
+  }
+  article{
+    padding: 0px 10px;
+    flex:1;
+  }
   a{
+    display:block;
     text-decoration: none;
     color:black;
     padding:10px 20px;
     text-align:center;
   }
-  .router-link-exact-active{
-    color: bold;
-    border-bottom: 2px solid red;
+  a:hover{
+    background:#777;
+    color:white;
   }
-  img.banner{
-    width:100%;
+  .router-link-exact-active{
+    background:blue;
+    color:white;
+  }
+  pre{
+    font-family:Consolas;
   }
 
 </style>
