@@ -11,8 +11,12 @@ Vue.config.productionTip = false
 Vue.use(VueRouter);
 
 const EzNewsColumn = {
+  props:{
+    tag: {required:true},
+    bgcolor:{ default:'#fff'}
+  },
   template:`
-    <div class="news-column">
+    <div class="news-column" :style="{background:bgcolor}">
       <h2>{{tag}}</h2>
       <ul>
         <li v-for="_news in news">
@@ -22,18 +26,18 @@ const EzNewsColumn = {
     </div>
   `,
   computed:{
-    tag() { return this.$route.params.tag },
     news(){
       return this.$parent.news.filter(n =>
-        n.tag === this.$route.params.tag)
+        n.tag === this.tag)
     }
   }
 }
 
 const EzAdvert = {
+  props:['altText'],
   template:`
     <div class="advert">
-      <img :src="ad_url">
+      <img :src="ad_url" :alt="altText">
     </div>
   `,
   computed:{
@@ -48,6 +52,25 @@ const router = new VueRouter({
       components:{
         default: EzNewsColumn,
         advert: EzAdvert
+      },
+      props:{
+        advert: {altText:'__advert__787887878__'},
+        default:route => {
+          const colorMap = {
+            '国内' : 'rgb(217, 219, 225)',
+            '国际' : 'rgb(181, 210, 181)',
+            '娱乐' : 'rgb(222, 199, 214)',
+            '科技' : 'rgb(216, 216, 222)',
+            '财经' : 'rgb(253, 224, 165)',
+            '体育' : 'rgb(150, 247, 178)',
+            '军事' : 'rgb(135, 200, 121)',
+            '社会' : 'rgb(220, 201, 231)'
+          }
+          return {
+            tag: route.params.tag,
+            bgcolor:colorMap[route.params.tag]
+          }
+        }
       }
     }
   ]

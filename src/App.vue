@@ -22,8 +22,8 @@
           },[])
       }
     },
-    data:function () {
-      return {
+    data: function () {
+      return{
         news:[
           {title:'揭装穷不露富官员：骑旧自行车上班家藏2亿现金',tag:'国内'},
           {title:'这些官员因群体性事件被查 有人外逃后回国自首',tag:'国内'},
@@ -133,6 +133,8 @@
     display:flex;
   }
   .news-column{
+    padding: 0 10px;
+    margin-top:10px;
     flex:1;
   }
   .news-column a{
